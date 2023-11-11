@@ -4,15 +4,12 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 import folium as foll
-import flask_wtf.csfr as CSRFProtect
 
 
 
 app = Flask(__name__, static_folder='static')
-csrf = CSRFProtect(app)
-db = SQLAlchemy(app)
 
-if os.environ['PRODUCTION_ENV']:
+if os.getenv("PRODUCTION_ENV", 'False').lower() in ('true', '1', 't'):
     app.config.from_object('scripts.config.ProdConfig')
 else:
     app.config.from_object('scripts.config.DevConfig')
@@ -21,6 +18,9 @@ app.config.update(
     SQLALCHEMY_DATABASE_URI=app.config.get('DATABASE_URI'),
     SQLALCHEMY_TRACK_MODIFICATIONS=app.config.get('SQLALCHEMY_TRACK_MODIFICATIONS')
 )	
+
+
+db = SQLAlchemy(app)
 
 ### TEST WORLD ###
 
@@ -45,7 +45,6 @@ def create_restaurant():
     return render_template('create_restaurant.html')
 
 @app.route('/add', methods=['POST'])
-@csrf.exempt
 def add_restaurant():
     try:
         name = request.values.get('restaurant_name')
@@ -67,7 +66,6 @@ def add_restaurant():
         return redirect(url_for('details', id=restaurant.id))
 
 @app.route('/review/<int:id>', methods=['POST'])
-@csrf.exempt
 def add_review(id):
     try:
         user_name = request.values.get('user_name')
