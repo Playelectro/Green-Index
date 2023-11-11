@@ -108,5 +108,5 @@ def utility_processor():
 ### TEST WORLD ###
 
 
-if __name__ == "__main__":
+if __name__ == "green-index":
 	app.run()
