@@ -1,7 +1,6 @@
 import os
 
 from flask import Flask
-from flask_restx import Api, Resource
 from flask_sqlalchemy import SQLAlchemy
 
 import folium as foll
@@ -10,7 +9,6 @@ import flask_wtf.csfr as CSRFProtect
 
 
 app = Flask(__name__, static_folder='static')
-api = Api(app, doc="/docs")	
 csrf = CSRFProtect(app)
 db = SQLAlchemy(app)
 
