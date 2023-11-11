@@ -1,31 +1,38 @@
 import os
+from datetime import datetime
 
-from flask import Flask
+from flask import Flask, redirect, render_template, request, send_from_directory, url_for
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-
-import folium as foll
-
+from flask_wtf.csrf import CSRFProtect
 
 
 app = Flask(__name__, static_folder='static')
+csrf = CSRFProtect(app)
 
-if os.getenv("PRODUCTION_ENV", 'False').lower() in ('true', '1', 't'):
-    app.config.from_object('scripts.config.ProdConfig')
+# WEBSITE_HOSTNAME exists only in production environment
+if os.environ['PRODUCTION_ENV'] is True:
+    # local development, where we'll use environment variables
+    print("Loading config.development and environment variables from .env file.")
+    app.config.from_object('azureproject.development')
 else:
-    app.config.from_object('scripts.config.DevConfig')
+    # production
+    print("Loading config.production.")
+    app.config.from_object('azureproject.production')
 
 app.config.update(
     SQLALCHEMY_DATABASE_URI=app.config.get('DATABASE_URI'),
-    SQLALCHEMY_TRACK_MODIFICATIONS=app.config.get('SQLALCHEMY_TRACK_MODIFICATIONS')
-)	
+    SQLALCHEMY_TRACK_MODIFICATIONS=False,
+)
 
-
+# Initialize the database connection
 db = SQLAlchemy(app)
 
-### TEST WORLD ###
+# Enable Flask-Migrate commands "flask db init/migrate/upgrade" to work
+migrate = Migrate(app, db)
 
+# The import must be done after db initialization due to circular import issue
 from models import Restaurant, Review
-
 
 @app.route('/', methods=['GET'])
 def index():
@@ -45,6 +52,7 @@ def create_restaurant():
     return render_template('create_restaurant.html')
 
 @app.route('/add', methods=['POST'])
+@csrf.exempt
 def add_restaurant():
     try:
         name = request.values.get('restaurant_name')
@@ -66,6 +74,7 @@ def add_restaurant():
         return redirect(url_for('details', id=restaurant.id))
 
 @app.route('/review/<int:id>', methods=['POST'])
+@csrf.exempt
 def add_review(id):
     try:
         user_name = request.values.get('user_name')
@@ -105,8 +114,10 @@ def utility_processor():
 
     return dict(star_rating=star_rating)
 
-### TEST WORLD ###
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
-
-if __name__ == "green-index":
-	app.run()
+if __name__ == '__main__':
+    app.run()
