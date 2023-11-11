@@ -24,6 +24,9 @@ app.config.update(
 
 ### TEST WORLD ###
 
+from models import Restaurant, Review
+
+
 @app.route('/', methods=['GET'])
 def index():
     print('Request for index page received')
