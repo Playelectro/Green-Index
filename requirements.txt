@@ -1,8 +1,2 @@
-Flask
-Flask-Migrate
-Flask-SQLAlchemy
-flask_wtf
-psycopg2
-python-dotenv
-SQLAlchemy
-Folium
+Flask==2.0.2
+gunicorn
