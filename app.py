@@ -18,7 +18,7 @@ def favicon():
 @app.route('/map')
 def iframe():
     m = fol.Map(
-        width = "800px",
+        width = "75%",
         height = "600px",
         location = [45.649208, 24.896366],
         zoom_start = 7,

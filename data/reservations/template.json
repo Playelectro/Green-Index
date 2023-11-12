@@ -1,0 +1,6 @@
+{
+    "name" : "the name of the reservation",
+    "area" : ["list of latitude and longitute coord pairs to define an area"],
+    "images" : ["list of images"],
+    "description" : "description of the reservation"
+}

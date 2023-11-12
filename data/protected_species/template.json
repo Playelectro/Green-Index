@@ -1,0 +1,8 @@
+{
+    "name" : "default",
+    "location" : [0.000, 0.000],
+    "description" : "default",
+    "status" : "default",
+    "type" : "default",
+    "images" : ["list of images path"]
+}
