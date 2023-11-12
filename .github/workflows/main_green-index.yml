@@ -64,4 +64,4 @@ jobs:
         with:
           app-name: 'green-index'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_335013DB6CE8479F970B1DF10DBD709A }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_17CF48F6277E4ED7A79BA6B477D73A44 }}
