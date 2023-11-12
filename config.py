@@ -5,7 +5,7 @@ class Config:
 	SQLALCHEMY_TRACK_MODIFICATIONS = os.environ['SQLACHEMY_TRACK_MODIFICATIONS']
 
 class DevConfig(Config):
-    DEBUG = True
+	DEBUG = True
 	SQLALCHEMY_ECHO = True
 
 class ProdConfig(Config):

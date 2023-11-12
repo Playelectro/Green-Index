@@ -22,7 +22,7 @@ def home():
 
 @app.route('/')
 def index():
-    return 
+    return "BLABLALBALBLABLALBAL"
     
 
 if __name__ == "__main__":
