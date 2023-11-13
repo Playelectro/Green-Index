@@ -1,12 +1,17 @@
 import os, json, glob
 
 import folium
+import shapely
 from flask import (Flask, render_template, request,
                    send_from_directory)
+
 
 app = Flask(__name__)
 map = 0
 map_js = 0
+
+marker_list = []
+area_list = [[]]
 
 
 @app.route('/')
@@ -38,6 +43,7 @@ def iframe():
         print('click_lat:' + text)
         print()
 
+    
     return render_template('map.html', header = header, body_html = body_html, script = script)
 
 
@@ -132,5 +138,5 @@ if __name__ == '__main__':
                 load_marker(js, map, plant_icon).add_to(map)
             print(j_file)
             f.close()
-
+    
     app.run(debug=True)
