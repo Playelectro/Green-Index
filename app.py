@@ -61,7 +61,7 @@ if __name__ == '__main__':
     
     for j_file in glob.glob(data_path + "protected_species/*.json"):
         if j_file.rfind('template') == -1:
-            f = open(j_file)
+            f = open(j_file, encoding = "utf8")
             js = json.load(f)
             if js['type'] == 'Animal':
                 load_marker(js, map, animal_icon).add_to(map)
