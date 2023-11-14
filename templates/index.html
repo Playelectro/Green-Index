@@ -6,10 +6,13 @@
 
 
 {% block content %}
+<body style="background-image: url({{ url_for('static', filename='images/image_background.jpg') }}); background-repeat: no-repeat; background-attachment: fixed;
+background-size: cover;">
   <div align = center>
     <div styles = "background-color: green">
       <h1>Hello World</h1>
     </div>
     <a href='/map'>Click me!</a>
   </div>
+</body>
 {% endblock %}

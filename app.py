@@ -1,7 +1,6 @@
 import os, json, glob
 
 import folium
-import shapely
 from flask import (Flask, render_template, request,
                    send_from_directory)
 
@@ -13,6 +12,7 @@ map_js = 0
 marker_list = []
 area_list = [[]]
 
+marker_area = 0.5
 
 @app.route('/')
 def index():
@@ -22,6 +22,10 @@ def index():
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
+
+@app.route('/background.jpg')
+def background():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'images/image_background.jpg')
 
 @app.route('/map')
 def iframe():
@@ -37,22 +41,28 @@ def iframe():
     # Inject code to get map clicks :)
     script = script[:pstart] + inject_popup_code() + script[pend:]    
     
-    text = request.args.get('click_lat')
-    if text is not None:
-        print()
-        print('click_lat:' + text)
-        print()
+    args = request.args
+    
+    if args.get('click_lat') is not None:
+    
+        click_lat = float(args.get('click_lat'))
+        click_lon = float(args.get('click_lon'))
+    
+        #load_marker_info(click_lat, click_lon)        
+        
 
     
     return render_template('map.html', header = header, body_html = body_html, script = script)
 
 
-def load_marker(data, map, icon):
-    return folium.Marker(
-        location = data['location'],
-        tooltip = data['name'],
-        icon = icon
-    )
+def load_marker_info(lat, lon):
+
+    
+    for marker in marker_list:
+        location = marker['location']
+        if abs(location[0] - lat) <= marker_area and abs(location[1]-lon) <= marker_area:
+            print(marker['name'])
+    
 
 def find_var_name(html,pattern):
     
@@ -116,15 +126,6 @@ if __name__ == '__main__':
     
     folium.LatLngPopup().add_to(map)
         
-    animal_icon = folium.CustomIcon(
-        'static/images/pawprint.png',
-        icon_size=(45 , 48)
-    )
-    
-    plant_icon = folium.CustomIcon(
-        'static/images/frunza.png',
-        icon_size=(45 , 48)
-    )
     
     data_path = 'data/'
     
@@ -132,11 +133,20 @@ if __name__ == '__main__':
         if j_file.rfind('template') == -1:
             f = open(j_file, encoding = "utf8")
             js = json.load(f)
-            if js['type'] == 'Animal':
-                load_marker(js, map, animal_icon).add_to(map)
-            else:
-                load_marker(js, map, plant_icon).add_to(map)
-            print(j_file)
+            i = 0
+            
+            while i < len(js['location']):
+                if js['type'] == 'Animal':
+                    folium.Marker(location = js['location'][i], tooltip = js['name'],icon = folium.CustomIcon('static/images/pawprint.png',icon_size=(45 , 48))).add_to(map)
+                else:
+                    folium.Marker(location = js['location'][i], tooltip = js['name'],icon = folium.CustomIcon('static/images/frunza.png',icon_size=(45 , 48))).add_to(map)
+                i+=1
+                
+            
+            
+            
+            marker_list.append(js)
+            
             f.close()
     
     app.run(debug=True)
