@@ -1,18 +1,18 @@
 import os, json, glob
 
 import folium
-from flask import (Flask, render_template, request,
+
+from folium.map import Marker
+from flask import (Flask, render_template, redirect, request,
                    send_from_directory)
 
+from jinja2 import Template
 
 app = Flask(__name__)
-map = 0
-map_js = 0
 
 marker_list = []
 area_list = [[]]
 
-marker_area = 0.5
 
 @app.route('/')
 def index():
@@ -23,95 +23,97 @@ def index():
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
 
-@app.route('/background.jpg')
-def background():
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'images/image_background.jpg')
-
 @app.route('/map')
 def iframe():
     map.get_root().render()
     header = map.get_root().header.render()
     body_html = map.get_root().html.render()
+    
+    click_js = """function onClick(e) {
+                    $.ajax({
+                        url: '',
+                        type: 'get',
+                        contentType: 'application/json',
+                        data: {
+                            click_lat: e.latlng.lat,
+                            click_lon: e.latlng.lng
+                        },
+                        success: function(response){
+                            update_page(response);
+                            showSlides(0);
+                        }
+                    })
+                }
+                """
+                 
+    e = folium.Element(click_js)
+    
+    map.get_root().script._children[e.get_name()] = e
+    
     script = map.get_root().script.render()
     
-    map_js = find_var_name(script, "var map_")
-    
-    pstart, pend = find_popup_slice(script)
-    
-    # Inject code to get map clicks :)
-    script = script[:pstart] + inject_popup_code() + script[pend:]    
-    
     args = request.args
+    
+    intrest_data = ""
+    div_marker = "no_class"
     
     if args.get('click_lat') is not None:
     
         click_lat = float(args.get('click_lat'))
         click_lon = float(args.get('click_lon'))
     
-        #load_marker_info(click_lat, click_lon)        
-        
-
+        intrest_data = format_data(load_marker_info(click_lat, click_lon))
     
-    return render_template('map.html', header = header, body_html = body_html, script = script)
+        if len(intrest_data) > 0:
+            div_marker = "item_first"
+            return intrest_data
+                        
+    return render_template('map.html', header = header, body_html = body_html, script = script, interest_data = intrest_data)
 
 
 def load_marker_info(lat, lon):
-
-    
     for marker in marker_list:
         location = marker['location']
-        if abs(location[0] - lat) <= marker_area and abs(location[1]-lon) <= marker_area:
-            print(marker['name'])
-    
+        for i in range(0, len(location)):
+            if location[i][0] == lat and location[i][1] == lon:
+                return marker
 
-def find_var_name(html,pattern):
+def format_data(data):
+    html = f'''
+    <div class="item_second" id = "info">
+   <div align = center>
+      <h1>{data['name']}</h1>
+   </div>
+   <div class = "item_second">
+      <p align = left style = "width: 70%">{data['description']}</p>
+      <div class="slideshow-container">
+   
+         <div class="mySlides" width = 50%>
+            <div class="numbertext">1 / 3</div>
+            <img src="{data['images']}/1.jpg" class = "resize">
+         </div>
+         <div class="mySlides" width = 50%>
+            <div class="numbertext">2 / 3</div>
+            <img src="{data['images']}/2.jpg" class = "resize">
+         </div>
+         <div class="mySlides" width = 50%>
+            <div class="numbertext">3 / 3</div>
+            <img src="{data['images']}/3.jpg" class = "resize">
+         </div>
+      </div>
+      <br>
     
-    starting_index = html.find(pattern) + 4
-    tmp_html = html[starting_index:]
-    ending_index = tmp_html.find(" =") + starting_index
-    
-    return html[starting_index:ending_index]
+        <div style="text-align:center">
+         <span class="dot" onclick="currentSlide(1)"></span>
+         <span class="dot" onclick="currentSlide(2)"></span>
+         <span class="dot" onclick="currentSlide(3)"></span>
+      </div>
+   </div>
+</div>
+</div>
 
-
-def find_popup_slice(html):
-    
-    pattern =  "function latLngPop(e)"
-    
-    starting_index = html.find(pattern)
-    
-    tmp_html = html[starting_index:]
-
-    
-    found = 0
-    index = 0
-    opening_found = False
-    while not opening_found or found > 0:
-        if tmp_html[index] == '{':
-            found += 1
-            opening_found = True
-        elif tmp_html[index] == '}':
-            found -= 1
-        index +=1
-    
-    ending_index = starting_index + index
-    
-    return starting_index, ending_index
-            
-def inject_popup_code():
-    return '''
-    function latLngPop(e) {
-              $.ajax({
-                  url: '',
-                  type: 'get',
-                  contentType: 'application/json',
-                  data: {
-                      click_lat: e.latlng.lat,
-                      click_lon: e.latlng.lng
-                  },
-                  success: function(response){}
-              })
-        }
     '''
+    return html
 
 if __name__ == '__main__':
 
@@ -123,11 +125,19 @@ if __name__ == '__main__':
         max_bounds = True,    
         tiles=folium.TileLayer(no_wrap=True)
     )
-    
-    folium.LatLngPopup().add_to(map)
         
     
     data_path = 'data/'
+    
+    
+    click_template = """{% macro script(this, kwargs) %}
+                        var {{ this.get_name() }} = L.marker(
+                            {{ this.location|tojson }},
+                            {{ this.options|tojson }}
+                            ).addTo({{ this._parent.get_name() }}).on('click', onClick);
+                        {% endmacro %}"""
+
+    Marker._template = Template(click_template)
     
     for j_file in glob.glob(data_path + "protected_species/*.json"):
         if j_file.rfind('template') == -1:

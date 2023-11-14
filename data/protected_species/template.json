@@ -4,5 +4,5 @@
     "description" : "default",
     "status" : "default",
     "type" : "default",
-    "images" : ["list of images path"]
+    "images" : "list of images path"
 }
