@@ -78,11 +78,13 @@ def load_marker_info(lat, lon):
             if location[i][0] == lat and location[i][1] == lon:
                 return marker
 
+
+
 def format_data(data):
     html = f'''
     <div class="item_second" id = "info">
    <div align = center>
-      <h1>{data['name']}</h1>
+      <h1>{data['name']} - {data['status']}</h1>
    </div>
    <div class = "item_second">
       <p align = left style = "width: 70%">{data['description']}</p>
@@ -114,6 +116,7 @@ def format_data(data):
 
     '''
     return html
+
 
 if __name__ == '__main__':
 
