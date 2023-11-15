@@ -1,0 +1,8 @@
+{
+    "name" : "Zimbru",
+    "location" : [[47.01327, 26.02410]],
+    "description" : "Zimbrul sau bizonul european (Bison bonasus) este o specie de bizon care se găsește în Europa. Animalul a fost descris prima dată în literatura științifică de Carl Linné, în 1758. În 1996 a fost clasificat ca specie în pericol.", 
+    "status" : "Pe cale de disparitie",
+    "type" : "Animal",
+    "images" : "/static/images/black_goat"
+}
