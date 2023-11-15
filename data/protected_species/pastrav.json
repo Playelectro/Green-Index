@@ -1,0 +1,8 @@
+{
+    "name" : "Pastrav",
+    "location" : [[45.35021, 24.44513]],
+    "description" : "Păstrăvul (Salmo trutta) este o specie de pește care trăiește în special în apele de munte, ape cu temperatură relativ scăzută și în timpul verii, dar poate fi găsit și în zonele mai joase, submontane și de deal, cu condiția ca apele să fie puternic oxigenate.", 
+    "status" : "Risc Scazut",
+    "type" : "Animal",
+    "images" : " "
+}
