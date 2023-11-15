@@ -82,37 +82,37 @@ def load_marker_info(lat, lon):
 
 def format_data(data):
     html = f'''
-    <div class="item_second" id = "info">
-   <div align = center>
-      <h1>{data['name']} - {data['status']}</h1>
-   </div>
-   <div class = "item_second">
-      <p align = left style = "width: 70%">{data['description']}</p>
-      <div class="slideshow-container">
-   
-         <div class="mySlides" width = 50%>
-            <div class="numbertext">1 / 3</div>
-            <img src="{data['images']}/1.jpg" class = "resize">
-         </div>
-         <div class="mySlides" width = 50%>
-            <div class="numbertext">2 / 3</div>
-            <img src="{data['images']}/2.jpg" class = "resize">
-         </div>
-         <div class="mySlides" width = 50%>
-            <div class="numbertext">3 / 3</div>
-            <img src="{data['images']}/3.jpg" class = "resize">
-         </div>
-      </div>
-      <br>
+        <div class="item_second" id = "info">
+    <div align = center>
+        <h1>{data['name']} - {data['status']}</h1>
+    </div>
+    <div class = "item_second">
+        <p align = left style = "width: 70%">{data['description']}</p>
+        <div class="slideshow-container">
     
-        <div style="text-align:center">
-         <span class="dot" onclick="currentSlide(1)"></span>
-         <span class="dot" onclick="currentSlide(2)"></span>
-         <span class="dot" onclick="currentSlide(3)"></span>
-      </div>
-   </div>
-</div>
-</div>
+            <div class="mySlides" width = 50%>
+                <div class="numbertext">1 / 3</div>
+                <img src="{data['images']}/1.jpg" class = "resize">
+            </div>
+            <div class="mySlides" width = 50%>
+                <div class="numbertext">2 / 3</div>
+                <img src="{data['images']}/2.jpg" class = "resize">
+            </div>
+            <div class="mySlides" width = 50%>
+                <div class="numbertext">3 / 3</div>
+                <img src="{data['images']}/3.jpg" class = "resize">
+            </div>
+        </div>
+        <br>
+        
+            <div style="text-align:center">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+    </div>
+    </div>
+    </div>
 
     '''
     return html
@@ -154,9 +154,6 @@ if __name__ == '__main__':
                 else:
                     folium.Marker(location = js['location'][i], tooltip = js['name'],icon = folium.CustomIcon('static/images/frunza.png',icon_size=(45 , 48))).add_to(map)
                 i+=1
-                
-            
-            
             
             marker_list.append(js)
             
