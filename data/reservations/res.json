@@ -1,0 +1,6 @@
+{
+    "name" : "the name of the reservation",
+    "area" : [[46.772198, 15.073237], [0.772198, 0.073237], [30.772198, 16.073237]],
+    "images" : "list of images",
+    "description" : "description of the reservation"
+}

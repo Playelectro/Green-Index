@@ -3,6 +3,7 @@ import os, json, glob
 import folium
 
 from folium.map import Marker
+from folium import Polygon
 from flask import (Flask, render_template, redirect, request,
                    send_from_directory)
 
@@ -11,7 +12,7 @@ from jinja2 import Template
 app = Flask(__name__)
 
 marker_list = []
-area_list = [[]]
+area_list = []
 
 
 @app.route('/')
@@ -45,6 +46,23 @@ def iframe():
                     })
                 }
                 """
+    
+    click_js_poly = """function onClickPoly(e) {
+                    $.ajax({
+                        url: '',
+                        type: 'get',
+                        contentType: 'application/json',
+                        data: {
+                            click_lat: e.latlng.lat,
+                            click_lon: e.latlng.lng
+                        },
+                        success: function(response){
+                            update_page(response);
+                            showSlides(0);
+                        }
+                    })
+                }
+                """
                  
     e = folium.Element(click_js)
     
@@ -61,7 +79,8 @@ def iframe():
     
         click_lat = float(args.get('click_lat'))
         click_lon = float(args.get('click_lon'))
-    
+
+        
         intrest_data = format_data(load_marker_info(click_lat, click_lon))
     
         if len(intrest_data) > 0:
@@ -128,9 +147,6 @@ if __name__ == '__main__':
         max_bounds = True,    
         tiles=folium.TileLayer(no_wrap=True)
     )
-        
-    
-    data_path = 'data/'
     
     
     click_template = """{% macro script(this, kwargs) %}
@@ -141,8 +157,21 @@ if __name__ == '__main__':
                         {% endmacro %}"""
 
     Marker._template = Template(click_template)
+
+                        
+    click_template_p = """{% macro script(this, kwargs) %} 
+                          var {{ this.get_name() }} = L.polygon(
+                          {{ this.locations|tojson }},
+                          {{ this.options|tojson }}
+                          ).addTo({{ this._parent.get_name() }}).on('click', onClick);
+                          {% endmacro %}"""
     
-    for j_file in glob.glob(data_path + "protected_species/*.json"):
+    folium.Polygon._template = Template(click_template_p)
+    
+    
+    
+    
+    for j_file in glob.glob("data/protected_species/*.json"):
         if j_file.rfind('template') == -1:
             f = open(j_file, encoding = "utf8")
             js = json.load(f)
@@ -156,6 +185,17 @@ if __name__ == '__main__':
                 i+=1
             
             marker_list.append(js)
+            
+            f.close()
+    
+    for j_file in glob.glob("data/reservations/*.json"):
+        if j_file.rfind('template') == -1:
+            f = open(j_file, encoding="utf8")
+            js = json.load(f)
+            
+            poly = folium.Polygon(locations= js['area'], color='green', weight=1, fill_color="light_blue", fill_opacity=0.3, fill=True, tooltip=js['name']).add_to(map)
+            
+            area_list.append(js)
             
             f.close()
     
