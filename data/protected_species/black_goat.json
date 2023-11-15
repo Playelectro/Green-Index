@@ -1,8 +1,8 @@
 {
     "name" : "Capra Neagra",
-    "location" : [[46.772198, 26.073237], [0.772198, 0.073237]],
+    "location" : [[46.772198, 26.073237]],
     "description" : "Capra neagră (rupicapra) este un animal care face parte din familia Bovidae, subfamilia Caprinae. Ea este răspândită în regiunile muntoase din Europa și Asia Mică. Trăiește în grupuri de 15-30 de capre. ",
     "status" : "Risc Scazut",
-    "type" : "Animal",
+    "type" : "Animalus Magus Portocalus",
     "images" : "/static/images/black_goat"
 }
