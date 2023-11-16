@@ -108,15 +108,12 @@ def format_data(data):
         <div class="slideshow-container">
     
             <div class="mySlides" width = 50%>
-                <div class="numbertext">1 / 3</div>
                 <img src="{data['images']}/1.jpg" class = "resize">
             </div>
             <div class="mySlides" width = 50%>
-                <div class="numbertext">2 / 3</div>
                 <img src="{data['images']}/2.jpg" class = "resize">
             </div>
             <div class="mySlides" width = 50%>
-                <div class="numbertext">3 / 3</div>
                 <img src="{data['images']}/3.jpg" class = "resize">
             </div>
         </div>
