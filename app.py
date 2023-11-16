@@ -2,6 +2,9 @@ import os, json, glob
 
 import folium
 
+from shapely.geometry import Point
+from shapely.geometry.polygon import Polygon
+
 from folium.map import Marker
 from folium.plugins import MarkerCluster
 from folium import Polygon
@@ -19,6 +22,10 @@ area_list = []
 @app.route('/')
 def index():
    return iframe()
+
+@app.route('/about_us')
+def about_us():
+    return render_template('about_us.html')
 
 @app.route('/favicon.ico')
 def favicon():
