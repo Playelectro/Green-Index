@@ -1,0 +1,8 @@
+{
+    "name" : "Floare de Colț",
+    "location" : [[47.5341593100891, 24.5559820401039]],
+    "description" : "(Leontopodium alpinum Cass.), numită și floarea-de-colț, este o specie de plantă erbacee, perenă, din genul Leontopodium Cass., familia Asteraceae.",
+    "status" : "Risc Scazut",
+    "type" : "Plants",
+    "images" : "static/images/floare_de_colt/"
+}
