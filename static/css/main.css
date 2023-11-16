@@ -4,7 +4,7 @@
     position: fixed;
     z-index: 1; 
     top: 0;
-    background-color: #111; 
+    background-color: #5085a5; 
     overflow-x: hidden;
     padding-top: 60px; 
     transition: 0.5s;
@@ -15,7 +15,7 @@
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
-    color: #818181;
+    color: black;
     display: block;
     transition: 0.3s;
 }
@@ -42,7 +42,7 @@
 .openbtn {
     font-size: 20px;
     cursor: pointer;
-    background-color: #111;
+    background-color: #5085a5;
     color: white;
     padding: 10px 15px;
     border: none;
@@ -52,12 +52,7 @@
     background-color: #444;
 }
 
-.prevent-select {
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none; /* Standard syntax */
-}
-  
+
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
