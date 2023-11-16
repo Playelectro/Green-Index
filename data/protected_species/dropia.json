@@ -1,0 +1,8 @@
+{
+    "name" : "Dropia",
+    "location" : [[46.49073, 21.37293 ]],
+    "description" : "Dropia (Otis tarda) este o pasăre din familia Otididae specifică stepelor din sud-estul Europei și zonelor cu climă temperată din Asia. În România s-a găsit până acum câteva decenii în Bărăgan, în prezent mai apare regulat pe teritoriul administrativ al orașului Salonta, județul Bihor respectiv al comunei Beba Veche, județul Timiș. Aceste populații sunt comune cu cele de la Kis-Sárrét, Parcul Național Körös-Maros, Ungaria, respectiv Mokrin, Voivodina, Serbia.",
+    "status" : "Vulnerabil",
+    "type" : "Animal",
+    "images" : "/static/images/dropia"
+}

@@ -1,0 +1,8 @@
+{
+    "name" : "Lopatarul",
+    "location" : [[45.09174, 28.11016]],
+    "description" : "Lopătarii sunt un gen, Platalea, al păsărilor de mal mari, cu picioare lungi. Lopătarii au o distribuție globală, se găsesc pe fiecare continent, cu excepția Antarcticii. Numele genului Platalea derivă din greaca veche și înseamnă „plat”, referindu-se la forma distinctivă a ciocului. Sunt recunoscute șase specii, care, deși plasate de obicei într-un singur gen, au fost uneori împărțite în trei genuri.",
+    "status" : "Risc Scazut",
+    "type" : "Animal",
+    "images" : "/static/images/lopatarul"
+}

@@ -1,8 +1,8 @@
 {
-    "name" : "Capra Neagra",
+    "name" : "Huhurez",
     "location" : [[46.52028, 22.28535]],
     "description" : "Specie de pasăre răpitoare de noapte de talie medie. Sexele sunt asemănătoare (femela fiind mai mare). Penaj gri-maroniu gălbui deschis (mai deschis decât la huhurezul mic), striat cu brun. Cap rotund cu disc facial gri-gălbui uniform, ochi negri și cioc galben. Coada lungă sub formă de pană de despicat (vizibilă în zbor) prezintă pe partea dorsală dungi întunecate și late. Lungimea corpului este de 50-59 cm, anvergura aripilor este de 103 – 124 de cm, iar greutatea de 500 – 950 grame la mascul și 570 – 1300 grame la femelă.",
     "status" : "Risc Scazut",
     "type" : "Animal",
-    "images" : "/static/images/black_goat"
+    "images" : "/static/images/huhurez"
 }
