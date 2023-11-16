@@ -1,7 +1,7 @@
 {
     "name" : "Zimbru",
     "location" : [[47.01327, 26.02410]],
-    "description" : "Zimbrul sau bizonul european (Bison bonasus) este o specie de bizon care se găsește în Europa. Animalul a fost descris prima dată în literatura științifică de Carl Linné, în 1758. În 1996 a fost clasificat ca specie în pericol.", 
+    "description" : "Zimbrul este cel mai mare mamifer terestru din Europa; greutatea unui adult variază între 530-840 kg la exemplarele sălbatice. Femelele sunt mai mici, cu o greutate de 320-540 kg. De asemenea, masculii au capul mai greu și greabănul mai înalt decât femelele. Ambii au coarne și le utilizează în lupte, deși diferă în grosime și lățime: masculul are coarnele mai groase și se află la o distanță mai mare una de cealaltă.",
     "status" : "Pe cale de disparitie",
     "type" : "Animal",
     "images" : "/static/images/zimbru"

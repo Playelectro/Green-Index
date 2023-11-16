@@ -1,5 +1,13 @@
 h1 {
-    color:gold;
+    color: #9F4298;
+}
+p {
+    font-size: larger;
+    color: #D1AFD3;
+}
+
+body{
+    background-color:#CFDB31;
 }
 
 .wrapper {
