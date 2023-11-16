@@ -3,7 +3,7 @@ import os, json, glob
 import folium
 
 from shapely.geometry import Point
-from shapely.geometry.polygon import Polygon
+from shapely.geometry.polygon import Polygon as Poly
 
 from folium.map import Marker
 from folium.plugins import MarkerCluster
@@ -52,23 +52,6 @@ def iframe():
                     })
                 }
                 """
-    
-    click_js_poly = """function onClickPoly(e) {
-                    $.ajax({
-                        url: '',
-                        type: 'get',
-                        contentType: 'application/json',
-                        data: {
-                            click_lat: e.latlng.lat,
-                            click_lon: e.latlng.lng
-                        },
-                        success: function(response){
-                            update_page(response);
-                            showSlides(0);
-                        }
-                    })
-                }
-                """
                  
     e = folium.Element(click_js)
     
@@ -87,11 +70,15 @@ def iframe():
         click_lon = float(args.get('click_lon'))
 
         
-        intrest_data = format_data(load_marker_info(click_lat, click_lon))
-    
-        if len(intrest_data) > 0:
+        intrest_data =load_marker_info(click_lat, click_lon)
+        
+        if intrest_data is None:
+            intrest_data = load_reser_info(click_lat,click_lon)
+            
+        if intrest_data is not None:
             div_marker = "item_first"
-            return intrest_data
+        
+        return format_data(intrest_data)
                         
     return render_template('index.html', header = header, body_html = body_html, script = script, interest_data = intrest_data)
 
@@ -102,14 +89,29 @@ def load_marker_info(lat, lon):
         for i in range(0, len(location)):
             if location[i][0] == lat and location[i][1] == lon:
                 return marker
+    return None
+
+def load_reser_info(lat, lon):
+    for res in area_list:
+        poly = Poly(res['area'])
+        if poly.contains(Point(lat,lon)):
+            return res
+    return None
 
 
 
 def format_data(data):
+    
+    title = ""
+    if data.get('status') is None or len(data['status']) == 0  or data['status'].find("default") != -1:
+        title = f"<h1>{data['name']}</h1>"
+    else:
+        title = f"<h1>{data['name']} - {data['status']}</h1>"
+    
     html = f'''
         <div class="item_second" id = "info">
     <div align = center>
-        <h1>{data['name']} - {data['status']}</h1>
+        {title}
     </div>
     <div class = "item_second">
         <p align = left style = "width: 70%">{data['description']}</p>
