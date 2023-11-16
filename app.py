@@ -108,13 +108,13 @@ def format_data(data):
         <p align = left style = "width: 70%">{data['description']}</p>
         <div class="slideshow-container">
     
-            <div class="slides" width = 50%>
+            <div class="mapSlides" width = 50%>
                 <img src="{data['images']}/1.jpg" class = "resize">
             </div>
-            <div class="slides" width = 50%>
+            <div class="mapSlides" width = 50%>
                 <img src="{data['images']}/2.jpg" class = "resize">
             </div>
-            <div class="slides" width = 50%>
+            <div class="mapSlides" width = 50%>
                 <img src="{data['images']}/3.jpg" class = "resize">
             </div>
         </div>
