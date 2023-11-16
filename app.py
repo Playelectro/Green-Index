@@ -3,9 +3,10 @@ import os, json, glob
 import folium
 
 from folium.map import Marker
+from folium.plugins import MarkerCluster
 from folium import Polygon
 from flask import (Flask, render_template, redirect, request,
-                   send_from_directory)
+                   send_from_directory, )
 
 from jinja2 import Template
 
@@ -107,13 +108,13 @@ def format_data(data):
         <p align = left style = "width: 70%">{data['description']}</p>
         <div class="slideshow-container">
     
-            <div class="mySlides" width = 50%>
+            <div class="slides" width = 50%>
                 <img src="{data['images']}/1.jpg" class = "resize">
             </div>
-            <div class="mySlides" width = 50%>
+            <div class="slides" width = 50%>
                 <img src="{data['images']}/2.jpg" class = "resize">
             </div>
-            <div class="mySlides" width = 50%>
+            <div class="slides" width = 50%>
                 <img src="{data['images']}/3.jpg" class = "resize">
             </div>
         </div>
@@ -142,6 +143,9 @@ if __name__ == '__main__':
         max_bounds = True,    
         tiles=folium.TileLayer(no_wrap=True)
     )
+    
+    	
+    marker_cluster = MarkerCluster().add_to(map)
     
     
     click_template = """{% macro script(this, kwargs) %}
@@ -174,9 +178,9 @@ if __name__ == '__main__':
             
             while i < len(js['location']):
                 if js['type'] == 'Animal':
-                    folium.Marker(location = js['location'][i], tooltip = js['name'],icon = folium.CustomIcon('static/images/pawprint.png',icon_size=(45 , 48))).add_to(map)
+                    folium.Marker(location = js['location'][i], tooltip = js['name'],icon = folium.CustomIcon('static/images/pawprint.png',icon_size=(45 , 48))).add_to(marker_cluster)
                 else:
-                    folium.Marker(location = js['location'][i], tooltip = js['name'],icon = folium.CustomIcon('static/images/frunza.png',icon_size=(45 , 48))).add_to(map)
+                    folium.Marker(location = js['location'][i], tooltip = js['name'],icon = folium.CustomIcon('static/images/frunza.png',icon_size=(45 , 48))).add_to(marker_cluster)
                 i+=1
             
             marker_list.append(js)
@@ -188,7 +192,7 @@ if __name__ == '__main__':
             f = open(j_file, encoding="utf8")
             js = json.load(f)
             
-            poly = folium.Polygon(locations= js['area'], color='green', weight=1, fill_color="light_blue", fill_opacity=0.3, fill=True, tooltip=js['name']).add_to(map)
+            poly = folium.Polygon(locations= js['area'], color='green', weight=1, fill_color="light_blue", fill_opacity=0.3, fill=True, tooltip=js['name']).add_to(marker_cluster)
             
             area_list.append(js)
             
