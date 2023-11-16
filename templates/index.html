@@ -5,40 +5,38 @@
 {% endblock %}
 
 {% block headadd %}
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style> 
-table, th, td{
-  border-color: #52665e;
-   border-collapse: collapse;
-  }
-  th{
-  background-color: #386150;
-  }
-table{
-  margin-left: auto;
-  margin-right:auto;
-}
-body{
-  background-image: url('/static/images/image_background.jpg');
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  }
-</style>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/map.css') }}" />
+{{header|safe}}
 {% endblock %}
 
 {% block content %}
 <body>
-  <div class="first">
-  <h1><p align= center>GREEN INDEX</p></h1>
-  </div>
-  <table border=1 width=720>
-  <tr>
-  <th width=25%><p align=center>Species</p></th>
-  <th width=25%><p align=center>  <a href='/map'>Harta</a></p></th>
-  <th width=25%><p align=center>About Project</p></th>
-  <th width=25%><p align=center>About Us</p></th>
-  </tr>
-  </table>
-  </body>
+    <div align = center class="wrapper" id="wrapper">
+        <div class="no_class">
+            {{body_html | safe}}
+        </div>
+    </div>
+    <script src="/static/js/slide_show.js"></script>
+</body>
+{% endblock %}
+
+{% block scripts %}
+{{script | safe}}
+function update_page(response){
+  var prev = document.getElementById("info");
+  if(prev != null){
+      prev.parentNode.removeChild(prev);
+  }
+  
+  var el = document.getElementById('wrapper');
+  var tmp = document.getElementsByClassName('no_class')[0];
+
+  if (!tmp.classList.contains('item_first') ){
+      tmp.classList.add('item_first');
+  }
+  var aux = document.createElement('template');
+  response = response.trim();
+  aux.innerHTML = response;
+  el.appendChild(aux.content.firstChild);
+}
 {% endblock %}

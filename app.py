@@ -17,14 +17,12 @@ area_list = []
 
 @app.route('/')
 def index():
-   print('Request for index page received')
-   return render_template('index.html')
+   return iframe()
 
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
 
-@app.route('/map')
 def iframe():
     map.get_root().render()
     header = map.get_root().header.render()
@@ -87,7 +85,7 @@ def iframe():
             div_marker = "item_first"
             return intrest_data
                         
-    return render_template('map.html', header = header, body_html = body_html, script = script, interest_data = intrest_data)
+    return render_template('index.html', header = header, body_html = body_html, script = script, interest_data = intrest_data)
 
 
 def load_marker_info(lat, lon):
