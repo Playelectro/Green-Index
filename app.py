@@ -40,7 +40,7 @@ def solutions():
 
 @app.route('/species')
 def species_page():
-    return species.species_entry(marker_list)
+    return species_entry()
     
 
 def iframe():
@@ -130,22 +130,26 @@ def format_data(data):
         else:
             suggestions = rules['animals']
 
-    if data.get('type') is not None:
-        if data['type'] == "Risc Scazut":
+    risc = ""
+    if data.get('status') is not None:
+        if data['status'] == "Risc Scazut":
             risc = "/static/images/Lc.jpg"
-        elif data['type'] == "Aproape de pericol":
+        elif data['status'] == "Aproape de pericol":
             risc = "/static/images/Nt.jpg"
-        elif data['type'] == "Vulnerabil":
+        elif data['status'] == "Vulnerabil":
             risc = "/static/images/Vu.jpg"
-        elif data['type'] == "In pericol":
+        elif data['status'] == "In pericol":
             risc = "/static/images/En.jpg"
-        elif data['type'] == "Critic":
+        elif data['status'] == "Critic":
             risc = "/static/images/Cr.jpg"
-        elif data['type'] == "Extinct in salbaticie":
+        elif data['status'] == "Extinct in salbaticie":
             risc = "/static/images/Ew.jpg"
-        elif data['type'] == "Extinct":
+        elif data['status'] == "Extint":
             risc = "/static/images/Ex.jpg"
-        
+    
+    if len(risc) > 0:
+        risc = f"<img style = \"width:100px; height:100px; \" src = \"{risc}\">" 
+    
     
     if len(suggestions) > 0:
         suggestions = f"""
@@ -211,6 +215,26 @@ def format_data(data):
     return html
 
 
+def species_entry():
+    
+    args = request.args
+    
+    mrk = None
+    
+    if args.get('name') is not None:
+        
+        name = args.get('name')
+        
+        for marker in marker_list:
+            name_mrk = marker['name']
+            if name_mrk == name:
+                    mrk = marker
+        
+        return format_data(mrk)
+
+        
+    return render_template('species.html', list=marker_list)
+    
 if __name__ == '__main__':
 
     normal_layer = folium.TileLayer(name="Filters", no_wrap=True)
