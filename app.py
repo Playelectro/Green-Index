@@ -7,7 +7,7 @@ from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon as Poly
 
 from folium.map import (Marker, LayerControl)
-from folium.plugins import MarkerCluster
+from folium.plugins import (MarkerCluster, Search)
 from folium import Polygon
 from flask import (Flask, render_template, redirect, request,
                    send_from_directory, )
@@ -195,13 +195,15 @@ def format_data(data):
 
 if __name__ == '__main__':
 
+    normal_layer = folium.TileLayer(name="Filters", no_wrap=True)
+    
     map = folium.Map(
         width = "75%",
         height = "600px",
         location = [45.96268191714687, 25.891383244726377],
         zoom_start = 6.5,
         max_bounds = True,    
-        tiles=folium.TileLayer(name="Filters", no_wrap=True)
+        tiles=normal_layer
     )
     
     click_template = """{% macro script(this, kwargs) %}
@@ -240,13 +242,13 @@ if __name__ == '__main__':
             
             while i < len(js['location']):
                 if js['type'] == 'Animal':
-                    spec = folium.Marker(location = js['location'][i], tooltip = js['name'],icon = folium.CustomIcon('static/images/pawprint.png',icon_size=(45 , 48)))
+                    spec = folium.Marker(location = js['location'][i], tooltip = js['name'], name = js['name'],icon = folium.CustomIcon('static/images/pawprint.png',icon_size=(45 , 48)))
                     animal_group.add_child(spec)
                 elif js['type'] == 'Fish':
-                    spec = folium.Marker(location = js['location'][i], tooltip = js['name'],icon = folium.CustomIcon('static/images/acvatic.png',icon_size=(45 , 48)))
+                    spec = folium.Marker(location = js['location'][i], tooltip = js['name'], name = js['name'],icon = folium.CustomIcon('static/images/acvatic.png',icon_size=(45 , 48)))
                     fish_group.add_child(spec)
                 else:
-                    spec = folium.Marker(location = js['location'][i], tooltip = js['name'],icon = folium.CustomIcon('static/images/frunza.png',icon_size=(45 , 48)))
+                    spec = folium.Marker(location = js['location'][i], tooltip = js['name'], name = js['name'],icon = folium.CustomIcon('static/images/frunza.png',icon_size=(45 , 48)))
                     plant_group.add_child(spec)
                 i+=1
             
@@ -256,6 +258,7 @@ if __name__ == '__main__':
             f.close()
             
     
+    
     map.add_child(animal_group)
     map.add_child(plant_group)
     map.add_child(fish_group)
@@ -263,12 +266,21 @@ if __name__ == '__main__':
     
     folium.map.LayerControl('topright', collapsed = True,).add_to(map)
     
+    searchnav = Search(
+        layer=reservs_group,
+        placeholder="Search a species or location",
+        geom_type="Point",
+        collapsed=True,
+        search_label="name",
+    ).add_to(map)
+
+    
     for j_file in glob.glob("data/reservations/*.json"):
         if j_file.rfind('template') == -1:
             f = open(j_file, encoding="utf8")
             js = json.load(f)
             
-            poly = folium.Polygon(locations= js['area'], color='green', weight=1, fill_color="light_blue", fill_opacity=0.3, fill=True, tooltip=js['name']).add_to(reservs_group)
+            poly = folium.Polygon(locations= js['area'], color='green', weight=1, fill_color="light_blue", fill_opacity=0.3, fill=True, tooltip=js['name'], name=js['name']).add_to(reservs_group)
             
             area_list.append(js)
             
