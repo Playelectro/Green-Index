@@ -2,13 +2,6 @@ import os, json, glob
 
 import folium
 import species
-import requests
-
-from bs4 import BeautifulSoup
-
-from selenium import webdriver 
-from selenium.webdriver.chrome.service import Service as ChromeService 
-from webdriver_manager.chrome import ChromeDriverManager 
 
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon as Poly
