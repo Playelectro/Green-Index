@@ -120,11 +120,19 @@ def format_data(data):
             </div>
             
             <div class = "item_second">
-                 <a href="javascript:void(0)" class="infocbtn prevent-select" onclick="closeNav()">&times;</a>
+                 <a href="javascript:void(0)" class="infocbtn prevent-select" onclick="closeInfo()">&times;</a>
             </div>
         </div>
 
-        <p align = left style = "width: 70%">{data['description']}</p>
+        <p align = left style = "width: 70%">
+        {data['description']}
+        </p>
+        
+        <ul>
+            <li> </li>
+            <li> </li>
+            <li> </li>
+        </ul>
         <div class="slideshow-container">
     
             <div class="mapSlides" width = 50%>
