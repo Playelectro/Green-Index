@@ -1,7 +1,6 @@
 import os, json, glob
 
 import folium
-import species
 
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon as Poly
@@ -169,7 +168,7 @@ def format_data(data):
          <div class="wrapper">
             <div align = right class= "item_first">
                 {title}
-                <img src = "{risc}">
+                {risc}
             </div>
             
             <div class = "item_second">
