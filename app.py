@@ -269,7 +269,7 @@ if __name__ == '__main__':
     searchnav = Search(
         layer=reservs_group,
         placeholder="Search a species or location",
-        geom_type="Point",
+        geom_type="Polygon",
         collapsed=True,
         search_label="name",
     ).add_to(map)
