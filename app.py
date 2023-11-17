@@ -165,6 +165,7 @@ def format_data(data):
          <div class="wrapper">
             <div align = right class= "item_first">
                 {title}
+                <img src = "{risc}">
             </div>
             
             <div class = "item_second">
