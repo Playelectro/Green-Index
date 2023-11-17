@@ -1,0 +1,6 @@
+{
+    "name" : "Pădurea Tudora",
+    "area" : [[47.53361933253847, 26.69061344275781], [47.52828597095511, 26.68798043216927],[47.52862786937733, 26.684942343028645],[47.521173978477606, 26.67876489510938],[47.50776798700891, 26.69314518370833],[47.515702558889615, 26.69101852130989],[47.517275650459624, 26.701044215473946],[47.53136297652205, 26.698512474523426],[47.533824450998736, 26.69061344275781]],
+    "images" : "/static/images/padurea_tudora",
+    "description" : "Pădurea Tudora este o arie protejată de intres național ce corespunde categoriei a IV-a IUCN (rezervație naturală de tip forestier), situată în județul Botoșani, pe teritoriul administrativ al comunei Tudora."
+}
