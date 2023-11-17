@@ -20,14 +20,17 @@
       <button class="openbtn prevent-select" onclick="openNav()" style="cursor:pointer;">&#9776;</button>
       <div id="main">
         <br><br><br>
-       <table style="width: 25%; height: 1 00px;;">
-        <tr>
+       <table style="width: 40%; height: 200px;;" class="center">
+        <tr style="color: #64CCC5;">
           <th style="font-size: x-large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Nume</th>
           <th style="font-size: x-large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Stare de conservare</th>
         </tr>
-        <tr> 
-          <td>adadada</td>
-        </tr>
+          {% for item in list %}
+          <tr style="color: #64CCC5;">
+            <td style="font-size: x-large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">{{item['name']}}</td>
+            <td style="font-size: x-large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">{{item['status']}}</td>
+          </tr>
+          {% endfor %}
        </table>
     </div>
    <script src="/static/js/index.js"></script>
