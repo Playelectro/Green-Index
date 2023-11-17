@@ -188,8 +188,10 @@ if __name__ == '__main__':
             while i < len(js['location']):
                 if js['type'] == 'Animal':
                     folium.Marker(location = js['location'][i], tooltip = js['name'],icon = folium.CustomIcon('static/images/pawprint.png',icon_size=(45 , 48))).add_to(marker_cluster)
+                elif js['type'] == 'Fish':
+                    folium.Marker(location = js['location'][i], tooltip = js['name'],icon = folium.CustomIcon('static/images/acvatic.png',icon_size=(45 , 48))).add_to(marker_cluster)
                 else:
-                    folium.Marker(location = js['location'][i], tooltip = js['name'],icon = folium.CustomIcon('static/images/frunza.png',icon_size=(45 , 48))).add_to(marker_cluster)
+                     folium.Marker(location = js['location'][i], tooltip = js['name'],icon = folium.CustomIcon('static/images/frunza.png',icon_size=(45 , 48))).add_to(marker_cluster)
                 i+=1
             
             marker_list.append(js)
