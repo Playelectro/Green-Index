@@ -1,0 +1,20 @@
+{
+    "animals": [
+        "Nu aruncați deșeuri în natură!", 
+        "Nu vânați animalele!", 
+        "Evitați drumețiile în zona respectivă!"
+    ],
+
+    "plants" :[
+        "Nu aruncați deșeuri în natură!", 
+        "Nu rupeți plantele din mediul lor!", 
+        "Nu călcați pe iarbă, în afara potecilor!"
+    ],
+
+    "fish" : [
+            "Nu aruncați deșeuri în apă!", 
+            "Nu pescuiți în această zonă!", 
+            "Nu vă scăldați în apă!"
+    ]
+
+}

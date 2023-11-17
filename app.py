@@ -1,6 +1,7 @@
 import os, json, glob
 
 import folium
+import species
 
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon as Poly
@@ -17,6 +18,8 @@ app = Flask(__name__)
 
 marker_list = []
 area_list = []
+
+rules = []
 
 
 @app.route('/')
@@ -111,6 +114,16 @@ def format_data(data):
         title = f"<h1>{data['name']}</h1>"
     else:
         title = f"<h1>{data['name']} - {data['status']}</h1>"
+    suggestions = ""        
+    
+    if data['type'] == "Animal":
+        suggestions = rules['animals']
+    elif data['type'] == "Plant":
+        suggestions = rules['plants']
+    else:
+        suggestions = rules['fish']
+    
+    
     
     html = f'''  
     <div class = "item_second" id = "info">
@@ -126,13 +139,18 @@ def format_data(data):
 
         <p align = left style = "width: 70%">
         {data['description']}
-        </p>
         
+        </p>
+
+        <br>
+        
+               <p align=center style = "font-size:30px;">Sugestii</p>
         <ul>
-            <li> </li>
-            <li> </li>
-            <li> </li>
+            <li><p>{suggestions[0]}</p></li>
+            <li><p>{suggestions[1]}</p></li>
+            <li><p>{suggestions[2]}</p></li>
         </ul>
+        <br>
         <div class="slideshow-container">
     
             <div class="mapSlides" width = 50%>
@@ -151,7 +169,10 @@ def format_data(data):
             <span class="dot" onclick="currentSlide(1)"></span>
             <span class="dot" onclick="currentSlide(2)"></span>
             <span class="dot" onclick="currentSlide(3)"></span>
+        
+        
         </div>
+        
     </div>
     </div>
     </div>
@@ -194,8 +215,9 @@ if __name__ == '__main__':
     
     folium.Polygon._template = Template(click_template_p)
     
+    rules = json.load(open("data/recommendations/recomendations.json", encoding="utf8"))
     
-    
+    print(rules)
     
     for j_file in glob.glob("data/protected_species/*.json"):
         if j_file.rfind('template') == -1:
