@@ -23,35 +23,19 @@
         <div class="grid-container">
         {% for item in list %}
         <div class="card; grid-item";>
-          <img src="{{item['images']}}/1.jpg" alt="Avatar" style="width:300px; height:300px;">
+          <img src="{{item['images']}}/1.jpg" alt="Avatar" style="width:300px; height:300px;" onclick="onClick(self)">
           <div class="container">
-            <h4><b>{{item['name']}}</b></h4>
+            <h4 id="name"><b>{{item['name']}}</b></h4>
             <p style="color: #04364A; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">{{item['status']}}</p>
           </div>
         </div> 
           {% endfor %}
     </div>
    <script src="/static/js/index.js"></script>
+   <script src="/static/js/lightbox.js"></script>
 </body>
 {% endblock %}
 
 {%block scripts%}
-var acc = document.getElementsByClassName("accordion");
-var i;
 
-for (i = 0; i < acc.length; i++) {
-  acc[i].addEventListener("click", function() {
-    /* Toggle between adding and removing the "active" class,
-    to highlight the button that controls the panel */
-    this.classList.toggle("active");
-
-    /* Toggle between hiding and showing the active panel */
-    var panel = this.nextElementSibling;
-    if (panel.style.display === "block") {
-      panel.style.display = "none";
-    } else {
-      panel.style.display = "block";
-    }
-  });
-} 
 {%endblock%}
