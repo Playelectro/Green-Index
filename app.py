@@ -40,6 +40,10 @@ def solutions():
 @app.route('/species')
 def species_page():
     return species_entry()
+
+@app.route('/nature_reserve')
+def nature_reserves_page():
+    return render_template('nature_reserve.html', list= area_list)
     
 
 def iframe():
