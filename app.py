@@ -133,17 +133,17 @@ def format_data(data):
     if data.get('type') is not None:
         if data['type'] == "Risc Scazut":
             risc = "static/images"
-        elif data['type'] == "Aproape de pericol"
+        elif data['type'] == "Aproape de pericol":
             risc = "static/images"
-        elif data['type'] == "Vulnerabil"
+        elif data['type'] == "Vulnerabil":
             risc = "static/images"
-        elif data['type'] == "In pericol"
+        elif data['type'] == "In pericol":
             risc = "static/images"
-        elif data['type'] == "Critic"
+        elif data['type'] == "Critic":
             risc = "static/images"
-        elif data['type'] == "Extinct in salbaticie"
+        elif data['type'] == "Extinct in salbaticie":
             risc = "static/images"
-        elif data['type'] == "Extinct"
+        elif data['type'] == "Extinct":
             risc = "static/images"
         
     
