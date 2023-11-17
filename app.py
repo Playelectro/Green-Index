@@ -125,7 +125,7 @@ def format_data(data):
     if data.get('type') is not None:
         if data['type'] == "Fish":
             suggestions = rules['fish']
-        elif data['type'] == "Plant":
+        elif data['type'] == "Plants":
             suggestions = rules['plants']
         else:
             suggestions = rules['animals']
@@ -247,7 +247,7 @@ if __name__ == '__main__':
                 elif js['type'] == 'Fish':
                     spec = folium.Marker(location = js['location'][i], tooltip = js['name'], name = js['name'],icon = folium.CustomIcon('static/images/acvatic.png',icon_size=(45 , 48)))
                     fish_group.add_child(spec)
-                else:
+                elif js['type'] == 'Plants':
                     spec = folium.Marker(location = js['location'][i], tooltip = js['name'], name = js['name'],icon = folium.CustomIcon('static/images/frunza.png',icon_size=(45 , 48)))
                     plant_group.add_child(spec)
                 i+=1
