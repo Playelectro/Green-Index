@@ -1,3 +1,14 @@
+
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    border-style: groove;
+    border-color: #64CCC5;
+    text-align: center;
+    height: 40px;
+  }
+
 .accordion {
     background-color: #04364A;
     color: #64CCC5;
@@ -67,6 +78,7 @@ p {
   
 .sidenav a:hover {
     color: #f1f1f1;
+    text-decoration: underline;
 }
   
 .sidenav .closebtn {
@@ -105,3 +117,7 @@ p {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
 }
+.center {
+    margin-left: auto;
+    margin-right: auto;
+  }

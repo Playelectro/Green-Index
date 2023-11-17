@@ -14,21 +14,24 @@
     <div id="SideNav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn prevent-select" onclick="closeNav()">&times;</a>
         <a href="/" class="prevent-select"; style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Home</a>
-        <a href="#" class="prevent-select"; style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Species</a>
+        <a href="/about_us" class="prevent-select"; style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">About us</a>
         
     </div>
       <button class="openbtn prevent-select" onclick="openNav()" style="cursor:pointer;">&#9776;</button>
       <div id="main">
-        <br><br>
-      <button class="accordion">Cine suntem?</button>
-      <div class="panel">
-        <p>Noi suntem echipa "Basil". Venim de la "Colegiul National Octavian Goga" Sibiu si am fost uniti de pasiunea pentru programare.</p>
-      </div>
-      
-      <button class="accordion">Ce facem?</button>
-      <div class="panel">
-        <p>Ne place sa participam la concursuri si proiecte extrascolare din domeniul programarii si al roboticii</p>
-      </div>
+        <br><br><br>
+       <table style="width: 40%; height: 200px;;" class="center">
+        <tr style="color: #64CCC5;">
+          <th style="font-size: x-large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Nume</th>
+          <th style="font-size: x-large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Stare de conservare</th>
+        </tr>
+          {% for item in list %}
+          <tr style="color: #64CCC5;">
+            <td style="font-size: x-large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">{{item['name']}}</td>
+            <td style="font-size: x-large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">{{item['status']}}</td>
+          </tr>
+          {% endfor %}
+       </table>
     </div>
    <script src="/static/js/index.js"></script>
 </body>

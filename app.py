@@ -47,7 +47,7 @@ def solutions():
 
 @app.route('/species')
 def species_page():
-    return species.species_entry()
+    return species.species_entry(marker_list)
     
 
 def iframe():
