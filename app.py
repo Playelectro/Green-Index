@@ -122,23 +122,25 @@ def format_data(data):
   
     suggestions = ""        
     
-    if data['type'] == "Fish":
-        suggestions = rules['fish']
-    elif data['type'] == "Plant":
-        suggestions = rules['plants']
-    else:
-        suggestions = rules['animals']
+    if data.get('type') is not None:
+        if data['type'] == "Fish":
+            suggestions = rules['fish']
+        elif data['type'] == "Plant":
+            suggestions = rules['plants']
+        else:
+            suggestions = rules['animals']
     
-    suggestions = f"""
-        <br>
-        <p align=center style = "font-size:30px;">Sugestii</p>
-        <ul>
-            <li><p>{suggestions[0]}</p></li>
-            <li><p>{suggestions[1]}</p></li>
-            <li><p>{suggestions[2]}</p></li>
-        </ul>
-        <br>
-    """
+    if len(suggestions) > 0:
+        suggestions = f"""
+            <br>
+            <p align=center style = "font-size:30px;">Sugestii</p>
+            <ul>
+                <li><p>{suggestions[0]}</p></li>
+                <li><p>{suggestions[1]}</p></li>
+                <li><p>{suggestions[2]}</p></li>
+            </ul>
+            <br>
+        """
     
     
     html = f'''  
@@ -196,8 +198,8 @@ if __name__ == '__main__':
     map = folium.Map(
         width = "75%",
         height = "600px",
-        location = [45.649208, 24.896366],
-        zoom_start = 7,
+        location = [45.96268191714687, 25.891383244726377],
+        zoom_start = 6.5,
         max_bounds = True,    
         tiles=folium.TileLayer(name="Filters", no_wrap=True)
     )
