@@ -38,6 +38,11 @@ def favicon():
 def solutions():
     return render_template('solutions.html')
 
+@app.route('/species')
+def species_page():
+    return species.species_entry()
+    
+
 def iframe():
     map.get_root().render()
     header = map.get_root().header.render()
@@ -109,26 +114,37 @@ def load_reser_info(lat, lon):
 
 def format_data(data):
     
-    title = ""
-    if data.get('status') is None or len(data['status']) == 0  or data['status'].find("default") != -1:
-        title = f"<h1>{data['name']}</h1>"
-    else:
-        title = f"<h1>{data['name']} - {data['status']}</h1>"
+    title = f"<h1>{data['name']}</h1>"
+  #  if data.get('status') is None or len(data['status']) == 0  or data['status'].find("default") != -1:
+  #      title = f"<h1>{data['name']}</h1>"
+  #   else:
+  #      title = f"<h1>{data['name']} - {data['status']}</h1>"
+  
     suggestions = ""        
     
-    if data['type'] == "Animal":
-        suggestions = rules['animals']
+    if data['type'] == "Fish":
+        suggestions = rules['fish']
     elif data['type'] == "Plant":
         suggestions = rules['plants']
     else:
-        suggestions = rules['fish']
+        suggestions = rules['animals']
     
+    suggestions = f"""
+        <br>
+        <p align=center style = "font-size:30px;">Sugestii</p>
+        <ul>
+            <li><p>{suggestions[0]}</p></li>
+            <li><p>{suggestions[1]}</p></li>
+            <li><p>{suggestions[2]}</p></li>
+        </ul>
+        <br>
+    """
     
     
     html = f'''  
     <div class = "item_second" id = "info">
          <div class="wrapper">
-            <div class= "item_first">
+            <div align = right class= "item_first">
                 {title}
             </div>
             
@@ -141,16 +157,10 @@ def format_data(data):
         {data['description']}
         
         </p>
-
-        <br>
         
-               <p align=center style = "font-size:30px;">Sugestii</p>
-        <ul>
-            <li><p>{suggestions[0]}</p></li>
-            <li><p>{suggestions[1]}</p></li>
-            <li><p>{suggestions[2]}</p></li>
-        </ul>
-        <br>
+        
+        {suggestions}
+        
         <div class="slideshow-container">
     
             <div class="mapSlides" width = 50%>
@@ -216,8 +226,6 @@ if __name__ == '__main__':
     folium.Polygon._template = Template(click_template_p)
     
     rules = json.load(open("data/recommendations/recomendations.json", encoding="utf8"))
-    
-    print(rules)
     
     for j_file in glob.glob("data/protected_species/*.json"):
         if j_file.rfind('template') == -1:
