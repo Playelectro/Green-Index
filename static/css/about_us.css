@@ -1,3 +1,8 @@
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+
 .accordion {
     background-color: #04364A;
     color: #64CCC5;
