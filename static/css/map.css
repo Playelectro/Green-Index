@@ -13,13 +13,12 @@
 
 .no_class{
   padding: 30px;
-  max-width: 60%;
+  max-width: 90%;
 }
 
 .item_first {
     width: 60%;
     float: left;
-    
 }
 
 .item_second {

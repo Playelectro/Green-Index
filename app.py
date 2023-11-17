@@ -2,11 +2,18 @@ import os, json, glob
 
 import folium
 import species
+import requests
+
+from bs4 import BeautifulSoup
+
+from selenium import webdriver 
+from selenium.webdriver.chrome.service import Service as ChromeService 
+from webdriver_manager.chrome import ChromeDriverManager 
 
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon as Poly
 
-from folium.map import Marker
+from folium.map import (Marker, LayerControl)
 from folium.plugins import MarkerCluster
 from folium import Polygon
 from flask import (Flask, render_template, redirect, request,
@@ -199,12 +206,8 @@ if __name__ == '__main__':
         location = [45.649208, 24.896366],
         zoom_start = 7,
         max_bounds = True,    
-        tiles=folium.TileLayer(no_wrap=True)
+        tiles=folium.TileLayer(name="Filters", no_wrap=True)
     )
-    
-    	
-    marker_cluster = MarkerCluster().add_to(map)
-    
     
     click_template = """{% macro script(this, kwargs) %}
                         var {{ this.get_name() }} = L.marker(
@@ -227,34 +230,55 @@ if __name__ == '__main__':
     
     rules = json.load(open("data/recommendations/recomendations.json", encoding="utf8"))
     
+    animal_group = folium.FeatureGroup(name="Animal Species", color='brown')
+    plant_group = folium.FeatureGroup(name="Plant Species", color='plant')
+    fish_group = folium.FeatureGroup(name="Fish Species", color='blue')
+    reservs_group = folium.FeatureGroup(name="Rezervatii Naturale", color='gray')
+    
     for j_file in glob.glob("data/protected_species/*.json"):
         if j_file.rfind('template') == -1:
             f = open(j_file, encoding = "utf8")
             js = json.load(f)
             i = 0
             
+            spec = None
+            
             while i < len(js['location']):
                 if js['type'] == 'Animal':
-                    folium.Marker(location = js['location'][i], tooltip = js['name'],icon = folium.CustomIcon('static/images/pawprint.png',icon_size=(45 , 48))).add_to(marker_cluster)
+                    spec = folium.Marker(location = js['location'][i], tooltip = js['name'],icon = folium.CustomIcon('static/images/pawprint.png',icon_size=(45 , 48)))
+                    animal_group.add_child(spec)
                 elif js['type'] == 'Fish':
-                    folium.Marker(location = js['location'][i], tooltip = js['name'],icon = folium.CustomIcon('static/images/acvatic.png',icon_size=(45 , 48))).add_to(marker_cluster)
+                    spec = folium.Marker(location = js['location'][i], tooltip = js['name'],icon = folium.CustomIcon('static/images/acvatic.png',icon_size=(45 , 48)))
+                    fish_group.add_child(spec)
                 else:
-                     folium.Marker(location = js['location'][i], tooltip = js['name'],icon = folium.CustomIcon('static/images/frunza.png',icon_size=(45 , 48))).add_to(marker_cluster)
+                    spec = folium.Marker(location = js['location'][i], tooltip = js['name'],icon = folium.CustomIcon('static/images/frunza.png',icon_size=(45 , 48)))
+                    plant_group.add_child(spec)
                 i+=1
+            
             
             marker_list.append(js)
             
             f.close()
+            
+    
+    map.add_child(animal_group)
+    map.add_child(plant_group)
+    map.add_child(fish_group)
+    map.add_child(reservs_group)
+    
+    folium.map.LayerControl('topright', collapsed = True,).add_to(map)
     
     for j_file in glob.glob("data/reservations/*.json"):
         if j_file.rfind('template') == -1:
             f = open(j_file, encoding="utf8")
             js = json.load(f)
             
-            poly = folium.Polygon(locations= js['area'], color='green', weight=1, fill_color="light_blue", fill_opacity=0.3, fill=True, tooltip=js['name']).add_to(marker_cluster)
+            poly = folium.Polygon(locations= js['area'], color='green', weight=1, fill_color="light_blue", fill_opacity=0.3, fill=True, tooltip=js['name']).add_to(reservs_group)
             
             area_list.append(js)
             
             f.close()
+    
+        
     
     app.run(debug=True)
