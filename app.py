@@ -31,6 +31,10 @@ def about_us():
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
 
+@app.route('/solutions')
+def solutions():
+    return render_template('solutions.html')
+
 def iframe():
     map.get_root().render()
     header = map.get_root().header.render()
@@ -108,12 +112,18 @@ def format_data(data):
     else:
         title = f"<h1>{data['name']} - {data['status']}</h1>"
     
-    html = f'''
-        <div class="item_second" id = "info">
-    <div align = center>
-        {title}
-    </div>
-    <div class = "item_second">
+    html = f'''  
+    <div class = "item_second" id = "info">
+         <div class="wrapper">
+            <div class= "item_first">
+                {title}
+            </div>
+            
+            <div class = "item_second">
+                 <a href="javascript:void(0)" class="infocbtn prevent-select" onclick="closeNav()">&times;</a>
+            </div>
+        </div>
+
         <p align = left style = "width: 70%">{data['description']}</p>
         <div class="slideshow-container">
     
