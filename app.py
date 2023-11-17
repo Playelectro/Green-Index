@@ -132,19 +132,19 @@ def format_data(data):
 
     if data.get('type') is not None:
         if data['type'] == "Risc Scazut":
-            risc = "static/images/Lc.jpg"
+            risc = "/static/images/Lc.jpg"
         elif data['type'] == "Aproape de pericol":
-            risc = "static/images/Nt.jpg"
+            risc = "/static/images/Nt.jpg"
         elif data['type'] == "Vulnerabil":
-            risc = "static/images/Vu.jpg"
+            risc = "/static/images/Vu.jpg"
         elif data['type'] == "In pericol":
-            risc = "static/images/En.jpg"
+            risc = "/static/images/En.jpg"
         elif data['type'] == "Critic":
-            risc = "static/images/Cr.jpg"
+            risc = "/static/images/Cr.jpg"
         elif data['type'] == "Extinct in salbaticie":
-            risc = "static/images/Ew.jpg"
+            risc = "/static/images/Ew.jpg"
         elif data['type'] == "Extinct":
-            risc = "static/images/Ex.jpg"
+            risc = "/static/images/Ex.jpg"
         
     
     if len(suggestions) > 0:
