@@ -3,10 +3,12 @@
 .wrapper {
     width: 100%;
     overflow: hidden;
+    padding: 1%;
 }
 
 #map {
     width: 100%;
+    overflow: hidden;
 }
 
 .no_class{
@@ -15,7 +17,7 @@
 }
 
 .item_first {
-    width: 60%;
+    width: 50%;
     float: left;
 }
 
