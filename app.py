@@ -196,8 +196,8 @@ if __name__ == '__main__':
     map = folium.Map(
         width = "75%",
         height = "600px",
-        location = [45.649208, 24.896366],
-        zoom_start = 7,
+        location = [45.985602234213964, 24.68580629142088],
+        zoom_start = 6.5,
         max_bounds = True,    
         tiles=folium.TileLayer(name="Filters", no_wrap=True)
     )
