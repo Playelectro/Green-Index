@@ -1,3 +1,7 @@
+.sidenav a:visited {
+    color: black;
+  }
+
 h1 {
     color: #64CCC5;
 }
@@ -18,6 +22,7 @@ p {
     transition: 0.5s;
     left:0;
 }
+
 
 .sidenav a {
     padding: 8px 8px 8px 32px;
