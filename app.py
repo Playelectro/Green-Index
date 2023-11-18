@@ -197,7 +197,7 @@ if __name__ == '__main__':
     animal_group = folium.FeatureGroup(name="Animal Species", color='brown')
     plant_group = folium.FeatureGroup(name="Plant Species", color='plant')
     fish_group = folium.FeatureGroup(name="Fish Species", color='blue')
-    reservs_group = folium.FeatureGroup(name="Rezervatii Naturale", color='gray')
+    reservs_group = folium.FeatureGroup(name="Natural Reserves", color='gray')
     
     for j_file in glob.glob("data/protected_species/*.json"):
         if j_file.rfind('template') == -1:
