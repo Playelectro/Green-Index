@@ -46,7 +46,7 @@ ul {
     position: fixed;
     z-index: 1; 
     top: 0;
-    background-color: #289D8C; 
+    background-color: #34252F; 
     overflow-x: hidden;
     padding-top: 60px; 
     transition: 0.5s;
@@ -91,7 +91,7 @@ ul {
 .openbtn {
     font-size: 20px;
     cursor: pointer;
-    background-color: #289D8C;
+    background-color: #34252F;
     color: white;
     padding: 10px 15px;
     border: none;

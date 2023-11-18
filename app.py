@@ -1,6 +1,7 @@
 import os, json, glob
 
 import folium
+import data_manip
 
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon as Poly
@@ -43,7 +44,7 @@ def species_page():
 
 @app.route('/nature_reserve')
 def nature_reserves_page():
-    return render_template('nature_reserve.html', list= area_list)
+    return area_entry()
     
 
 def iframe():
@@ -93,7 +94,7 @@ def iframe():
         if intrest_data is not None:
             div_marker = "item_first"
         
-        return format_data(intrest_data)
+        return data_manip.format_data(intrest_data)
                         
     return render_template('index.html', header = header, body_html = body_html, script = script, interest_data = intrest_data)
 
@@ -114,110 +115,6 @@ def load_reser_info(lat, lon):
     return None
 
 
-
-def format_data(data):
-    
-    title = f"<h1>{data['name']}</h1>"
-  #  if data.get('status') is None or len(data['status']) == 0  or data['status'].find("default") != -1:
-  #      title = f"<h1>{data['name']}</h1>"
-  #   else:
-  #      title = f"<h1>{data['name']} - {data['status']}</h1>"
-  
-    suggestions = ""        
-    
-    if data.get('type') is not None:
-        if data['type'] == "Fish":
-            suggestions = rules['fish']
-        elif data['type'] == "Plants":
-            suggestions = rules['plants']
-        else:
-            suggestions = rules['animals']
-
-    risc = ""
-    if data.get('status') is not None:
-        if data['status'] == "Risc Scazut":
-            risc = "/static/images/Lc.jpg"
-        elif data['status'] == "Aproape de pericol":
-            risc = "/static/images/Nt.jpg"
-        elif data['status'] == "Vulnerabil":
-            risc = "/static/images/Vu.jpg"
-        elif data['status'] == "In pericol":
-            risc = "/static/images/En.jpg"
-        elif data['status'] == "Critic":
-            risc = "/static/images/Cr.jpg"
-        elif data['status'] == "Extinct in salbaticie":
-            risc = "/static/images/Ew.jpg"
-        elif data['status'] == "Extint":
-            risc = "/static/images/Ex.jpg"
-    
-    if len(risc) > 0:
-        risc = f"<img style = \"width:100px; height:100px; \" src = \"{risc}\">" 
-    
-    
-    if len(suggestions) > 0:
-        suggestions = f"""
-            <br>
-            <p align=center style = "font-size:30px;">Sugestii</p>
-            <ul>
-                <li><p>{suggestions[0]}</p></li>
-                <li><p>{suggestions[1]}</p></li>
-                <li><p>{suggestions[2]}</p></li>
-            </ul>
-            <br>
-        """
-    
-    
-    html = f'''  
-    <div class = "item_second" id = "info">
-         <div class="wrapper">
-            <div align = right class= "item_first">
-                {title}
-                {risc}
-            </div>
-            
-            <div class = "item_second">
-                 <a href="javascript:void(0)" class="infocbtn prevent-select" onclick="closeInfo()">&times;</a>
-            </div>
-        </div>
-
-        <p align = left style = "width: 70%">
-        {data['description']}
-        
-        </p>
-        
-        
-        {suggestions}
-        
-        <div class="slideshow-container">
-    
-            <div class="mapSlides" width = 50%>
-                <img src="{data['images']}/1.jpg" class = "resize">
-            </div>
-            <div class="mapSlides" width = 50%>
-                <img src="{data['images']}/2.jpg" class = "resize">
-            </div>
-            <div class="mapSlides" width = 50%>
-                <img src="{data['images']}/3.jpg" class = "resize">
-            </div>
-        </div>
-        <br>
-        
-            <div style="text-align:center">
-            <span class="dot" onclick="currentSlide(1)"></span>
-            <span class="dot" onclick="currentSlide(2)"></span>
-            <span class="dot" onclick="currentSlide(3)"></span>
-        
-        
-        </div>
-        
-    </div>
-    </div>
-    </div>
-
-    '''
-    return html
-
-
 def species_entry():
     
     args = request.args
@@ -232,11 +129,31 @@ def species_entry():
             name_mrk = marker['name']
             if name_mrk == name:
                     mrk = marker
-        
-        return format_data(mrk)
+                    
+        return data_manip.format_data_gallery(mrk)
 
         
     return render_template('species.html', list=marker_list)
+
+def area_entry():
+    
+    args = request.args
+    
+    mrk = None
+    
+    if args.get('name') is not None:
+        
+        name = args.get('name')
+        
+        for marker in area_list:
+            name_mrk = marker['name']
+            if name_mrk == name:
+                    mrk = marker
+                    
+        return data_manip.format_data_gallery(mrk)
+
+        
+    return render_template('nature_reserve.html', list=area_list)
     
 if __name__ == '__main__':
 
@@ -271,6 +188,11 @@ if __name__ == '__main__':
     folium.Polygon._template = Template(click_template_p)
     
     rules = json.load(open("data/recommendations/recomendations.json", encoding="utf8"))
+
+    
+    search_group = folium.FeatureGroup(
+        control=False
+    ).add_to(map)
     
     animal_group = folium.FeatureGroup(name="Animal Species", color='brown')
     plant_group = folium.FeatureGroup(name="Plant Species", color='plant')
@@ -304,21 +226,13 @@ if __name__ == '__main__':
             
     
     
-    map.add_child(animal_group)
-    map.add_child(plant_group)
-    map.add_child(fish_group)
-    map.add_child(reservs_group)
+    animal_group.add_to(map)
+    plant_group.add_to(map)
+    fish_group.add_to(map)
     
-    folium.map.LayerControl('topright', collapsed = True,).add_to(map)
-    
-    searchnav = Search(
-        layer=reservs_group,
-        placeholder="Search a species or location",
-        geom_type="Polygon",
-        collapsed=True,
-        search_label="name",
-    ).add_to(map)
-
+    animal_group.add_to(search_group)
+    plant_group.add_to(search_group)
+    fish_group.add_to(search_group)
     
     for j_file in glob.glob("data/reservations/*.json"):
         if j_file.rfind('template') == -1:
@@ -331,6 +245,20 @@ if __name__ == '__main__':
             
             f.close()
     
-        
+    
+    
+    reservs_group.add_to(map)
+    
+    folium.map.LayerControl('topright', collapsed = True,).add_to(map)
+    
+    searchnav = Search(
+        layer=search_group,
+        placeholder="Search a species or location",
+        geom_type="Point",
+        collapsed=True,
+        search_label="name",
+        weight=3,
+    ).add_to(map)
+
     
     app.run(debug=True)
