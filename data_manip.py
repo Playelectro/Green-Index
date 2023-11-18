@@ -157,16 +157,16 @@ def format_data_gallery(data):
         
         </p>
         
-        <div class="slideshow-container">
+        <div class="grid-container">
     
-            <div class="mapSlides" width = 50%>
-                <img src="{data['images']}/1.jpg" class = "resize">
+            <div class="card" style=" width: 85%">
+                <img src="{data['images']}/1.jpg" style="width:100%; height:300px;">
             </div>
-            <div class="mapSlides" width = 50%>
-                <img src="{data['images']}/2.jpg" class = "resize">
+            <div class="card" style="width: 85%">
+                <img src="{data['images']}/2.jpg" style="width:100%; height:300px;">
             </div>
-            <div class="mapSlides" width = 50%>
-                <img src="{data['images']}/3.jpg" class = "resize">
+            <div class="card" style=" width: 85%">
+                <img src="{data['images']}/3.jpg" style="width:100%; height:300px;">
             </div>
         </div>
         <br>
